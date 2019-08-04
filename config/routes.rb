@@ -4,8 +4,12 @@ Rails.application.routes.draw do
   end
 
   root to: "homes#show"
-  resources :shouts, only: [:create, :show] do
-    member do 
+
+  post 'text_shouts' => 'shouts#create', defaults: { content_type: TextShout }
+  post 'photo_shouts' => 'shouts#create', defaults: { content_type: PhotoShout }
+
+  resources :shouts, only: [:show] do
+    member do
       post 'like' => 'likes#create'
       delete 'unlike' => 'likes#destroy'
     end
